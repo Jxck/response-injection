@@ -71,6 +71,16 @@ function test() {
 ).catch(console.error.bind(console));
 ```
 
+## Sample
+
+```sh
+$ git clone ttps://github.com/Jxck/response-injection
+$ cd response-injection
+$ python -m SimleHTTPServer 3000 # or like your own
+```
+
+and open http://localhost:3000/lib/sample/
+
 ## TODO
 
 - write test
