@@ -1,4 +1,9 @@
-var mockdata = {
+var option = {
+  ignore: ['/', '/test.js', '/main.js'],
+  scope: '.'
+};
+
+Injector({
   '/success': {
     head: {
       status: 200,
@@ -15,7 +20,7 @@ var mockdata = {
   },
   '/fail': {
     head: {
-      status: 402,
+      status: 404,
       statusText: 'Not Found',
       headers: {
         'Content-Type': 'application/json'
@@ -25,8 +30,9 @@ var mockdata = {
       message: 'user not found'
     }
   }
-}
+}, option).then(
 
+// write test as usual
 function test() {
   console.log('start test');
 
@@ -45,27 +51,4 @@ function test() {
   // etc
 }
 
-Promise.race([
-  navigator.serviceWorker.register('worker.js'),
-  navigator.serviceWorker.getRegistration()
-]).then(function() {
-  console.log('service worker ready');
-
-  console.log('send mock data to the worker');
-  var msgchan = new MessageChannel();
-  navigator.serviceWorker.controller.postMessage(JSON.stringify(mockdata), [msgchan.port2]);
-
-  return new Promise(function(done, fail) {
-    // addEventListener だと動かない
-    msgchan.port1.onmessage = function(event) {
-      console.log('response from worker', event);
-      if(event.data === 'done') {
-        done();
-      } else {
-        fail();
-      }
-    };
-  });
-}).then(function() {
-  test();
-}).catch(console.error.bind(console));
+).catch(console.error.bind(console));
