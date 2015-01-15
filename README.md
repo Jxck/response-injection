@@ -75,11 +75,11 @@ function test() {
 
 ```sh
 $ git clone ttps://github.com/Jxck/response-injection
-$ cd response-injection
+$ cd response-injection/sample
 $ python -m SimleHTTPServer 3000 # or like your own
 ```
 
-and open http://localhost:3000/lib/sample/
+and open http://localhost:3000/
 
 ## TODO
 
