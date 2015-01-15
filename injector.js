@@ -1,7 +1,7 @@
 function Injector(mockdata, option) {
   console.log(mockdata, option);
   option = option || {};
-  option.scope = option.scope || '/';
+  option.scope = option.scope || '.';
   option.ignore = option.ignore || [];
 
   return Promise.race([

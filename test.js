@@ -1,9 +1,6 @@
-var option = {
-  ignore: ['/', '/test.js', '/main.js'],
-  scope: '.'
-};
-
-Injector({
+Injector(
+// response mock data
+{
   '/success': {
     head: {
       status: 200,
@@ -30,7 +27,15 @@ Injector({
       message: 'user not found'
     }
   }
-}, option).then(
+},
+
+// option
+{
+  ignore: ['/', '/test.js', '/main.js'], // ignore injection (default [])
+  scope: '.' // scope for register worker (default '/')
+}
+
+).then(
 
 // write test as usual
 function test() {
