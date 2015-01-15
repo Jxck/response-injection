@@ -2,9 +2,9 @@
 
 ## description
 
-inject custom Response to XHR from Service Worker.
-
-POF of mocking networks access from browser in testing.
+PoC of mocking networks access from browser in testing.
+inject custom Response to XHR from Service Worker,
+and you can update mock data with only reload the window thread.
 
 
 ## how to use
@@ -76,6 +76,9 @@ function test() {
 - write test
 - write more readme
 - add to bower
+- support more mock style
+ - array of Response
+ - support body condittion
 
 ## License
 
