@@ -31,8 +31,8 @@ Injector(
 
 // option
 {
-  ignore: ['/', '/test.js', '/main.js'], // ignore injection (default [])
-  scope: '.' // scope for register worker (default '/')
+  ignore: ['/', '/test.js', '/main.js', '/injector.js'], // ignore injection (default [])
+  scope: '.' // scope for register worker (default '.')
 }
 
 ).then(
