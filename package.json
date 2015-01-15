@@ -1,0 +1,22 @@
+{
+  "name": "response-injection",
+  "version": "0.0.0",
+  "description": "response injection for network access test using service worker",
+  "main": "lib/injection.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jxck/response-injection.git"
+  },
+  "keywords": [
+    "service worker",
+    "network",
+    "testing",
+    "mock",
+    "fetch"
+  ],
+  "author": "Jxck",
+  "license": "MIT"
+}
