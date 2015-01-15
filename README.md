@@ -75,7 +75,7 @@ function test() {
 
 - write test
 - write more readme
-
+- add to bower
 
 ## License
 
