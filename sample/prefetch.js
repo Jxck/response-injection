@@ -23,25 +23,34 @@ if ('ServiceWorkerGlobalScope' in self && self instanceof ServiceWorkerGlobalSco
   console.log('service worker');
   self.onfetch = function(event) {
     var url = new URL(event.request.url);
-    if (!(url.pathname === '/' || url.pathname === '/index.html')) {
+    if (url.pathname === '/prefetch.js') {
       console.log('no prefetch for', url.pathname);
       return;
     }
     console.log('fetch for', url.pathname);
-    event.respondWith(fetch(event.request.clone()).then(function (response) {
-      var responseInit = {
-        statue: response.status,
-        statusText: response.statusText,
-        headers: response.headers
-      }
-      return response.clone().body.getReader().read().then(function(body) {
-        var bodyString = String.fromCharCode.apply(null, body.value);
+    event.respondWith(caches.open('prefetch').then(function(cache) {
+      return cache.match(event.request).then(function(cached) {
+        if (cached) {
+          console.log('cache hit!!!!');
+          return cached;
+        } else {
+          return fetch(event.request.clone()).then(function (response) {
+            var responseInit = {
+              statue: response.status,
+              statusText: response.statusText,
+              headers: response.headers
+            }
+            return response.clone().body.getReader().read().then(function(body) {
+              var bodyString = String.fromCharCode.apply(null, body.value);
 
-        setTimeout(function() {
-          prefetch(bodyString);
-        }, 0);
-        var res = new Response(body.value, responseInit);
-        return res;
+              setTimeout(function() {
+                prefetch(bodyString);
+              }, 0);
+              var res = new Response(body.value, responseInit);
+              return res;
+            });
+          })
+        }
       });
     }));
   };
