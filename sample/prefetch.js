@@ -10,14 +10,11 @@ function prefetch(html) {
 
   console.log('start prefetch', files);
 
-  caches.open('prefetch').then(function (cache) {
-    files.forEach(function(file) {
-      fetch(file)
-        .then(function(response) {
-          cache.put(file, response);
-
-          console.log(cache);
-        });
+  files.forEach(function(file) {
+    caches.open('prefetch').then(function (cache) {
+      fetch(file).then(function(response) {
+        cache.put(file, response)
+      });
     });
   });
 }
