@@ -17,6 +17,9 @@ http.createServer(function(req, res) {
   if (query.id) { // ?id=1 => 1.html
     file = query.id + '.html';
     ext = 'html';
+  } else if (req.url === '/') {
+    file = 'index.html';
+    ext = 'html';
   } else {
     file = req.url.replace('/', '');
     ext = file.split('.').pop();
