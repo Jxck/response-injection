@@ -16,7 +16,9 @@ if ('ServiceWorkerGlobalScope' in self && self instanceof ServiceWorkerGlobalSco
       return response.clone().body.getReader().read().then(function(body) {
         var bodyString = String.fromCharCode.apply(null, body.value);
         var res = new Response(body.value, responseInit);
-        console.log(res);
+        setTimeout(function() {
+          console.log(bodyString);
+        }, 1000);
         return res;
       });
     }));
