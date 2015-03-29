@@ -9,7 +9,9 @@ var ctype = {
 }
 
 http.createServer(function(req, res) {
-  console.log(req.url);
+  if (req.url !== '/prefetch.js') {
+    console.log(req.url);
+  }
   var file = '';
   var ext = '';
   var query = url.parse(req.url, true).query;
