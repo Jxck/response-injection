@@ -1,4 +1,5 @@
 function prefetch(html) {
+  console.log('start parse');
   var files = html.split('\n').map(function (line) {
     return /a rel="prefetch" href="(.+?)"/.exec(line);
   }).filter(function(line) {
@@ -6,6 +7,8 @@ function prefetch(html) {
   }).map(function(line) {
     return line[1];
   });
+
+  console.log('start prefetch', files);
 
   caches.open('prefetch').then(function (cache) {
     files.forEach(function(file) {
