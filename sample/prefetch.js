@@ -1,3 +1,24 @@
+function prefetch(html) {
+  var files = html.split('\n').map(function (line) {
+    return /a rel="prefetch" href="(.+?)"/.exec(line);
+  }).filter(function(line) {
+    return line !== null;
+  }).map(function(line) {
+    return line[1];
+  });
+
+  caches.open('prefetch').then(function (cache) {
+    files.forEach(function(file) {
+      fetch(file)
+        .then(function(response) {
+          cache.put(file, response);
+
+          console.log(cache);
+        });
+    });
+  });
+}
+
 if ('ServiceWorkerGlobalScope' in self && self instanceof ServiceWorkerGlobalScope) {
   console.log('service worker');
   self.onfetch = function(event) {
@@ -15,6 +36,10 @@ if ('ServiceWorkerGlobalScope' in self && self instanceof ServiceWorkerGlobalSco
       }
       return response.clone().body.getReader().read().then(function(body) {
         var bodyString = String.fromCharCode.apply(null, body.value);
+
+        setTimeout(function() {
+          prefetch(bodyString);
+        }, 0);
         var res = new Response(body.value, responseInit);
         return res;
       });
