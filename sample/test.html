@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>title</title>
+template
+
+<template id="prefetched">
+<!DOCTYPE html>
+<meta charset="utf-8">
+<link rel="prefetch" href="main.js">
+<title>title</title>
+<ul>
+  <li><a rel="prefetch" href="1.html">1</a></li>
+  <li><a rel="prefetch" href="2.html">2</a></li>
+  <li><a rel="prefetch" href="3.html">3</a></li>
+</ul>
+<input id="b" type="button" value="xhr"></input>
+<script rel="prefetch" src="prefetch.js"></script>
+</template>
+
+
+<script>
+var t = document.querySelector('#prefetched');
+
+// plan 1 (DOMParser)
+(function(html) {
+  'use strict';
+  let parser = new DOMParser();
+  let doc = parser.parseFromString(html, "text/html");
+  let targets = doc.querySelectorAll('[rel=prefetch]');
+
+  let urls = Array.prototype.slice.call(targets).map(function(target) {
+    let attributes = target.attributes;
+    let attribute = attributes.getNamedItem('href') || attributes.getNamedItem('src');
+    return attribute.value;
+  });
+
+  console.log(urls);
+})(t.innerHTML);
+
+// plan 2 (div element)
+(function(html) {
+  'use strict';
+  let div = document.createElement('div');
+  div.innerHTML = html;
+
+  let targets = div.querySelectorAll('[rel=prefetch]');
+  let urls = Array.prototype.slice.call(targets).map(function(target) {
+    return target.href || target.src;
+  });
+
+  console.log(urls);
+})(t.innerHTML);
+
+// plan 3 (template element)
+(function(html) {
+  'use strict';
+  let template = document.createElement('template');
+  template.innerHTML = html;
+
+  let doc = document.importNode(template.content, true);
+  let targets = doc.querySelectorAll('[rel=prefetch]');
+  let urls = Array.prototype.slice.call(targets).map(function(target) {
+    return target.href || target.src;
+  });
+
+  console.log(urls);
+})(t.innerHTML);
+</script>
+
