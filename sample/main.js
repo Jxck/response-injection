@@ -2,9 +2,10 @@ function get(url) {
   return new Promise(function(done, fail) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url);
-    xhr.responseType = 'json';
+    xhr.responseType = 'text';
     xhr.addEventListener('load', function() {
-      console.log(xhr.status);
+      console.log(xhr);
+      console.log(xhr.response);
       if(xhr.status >= 400) {
         return fail(xhr.response);
       }
