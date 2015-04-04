@@ -26,6 +26,26 @@ Injector(
     body: {
       message: 'user not found'
     }
+  },
+  '/foooooo': {
+    head: {
+      status: 402,
+      statusText: 'Payment Required',
+      headers: {
+        'Content-Type': 'text/plain'
+      }
+    },
+    body: '金払え'
+  },
+
+  '/bar': {
+    head: {
+      status: 200,
+      headers: {
+        'Content-Type': 'text/plain'
+      }
+    },
+    body: 'bar'
   }
 },
 
@@ -51,9 +71,18 @@ function test() {
   get('/fail').then(function(res) {
     console.assert(false);
   }).catch(function(err) {
-    console.assert(err.message, 'user not found');
+    console.log(err);
   });
 
+  get('/foooooo').then(function(res) {
+    console.log(res);
+  }).catch(function(err) {
+    console.log(err);
+  });
+
+  get('/bar').then(function(res) {
+    console.log(res);
+  });
   // etc
 }
 
