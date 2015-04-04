@@ -39,6 +39,7 @@ Injector(
 
 // write test as usual
 function test() {
+  console.log('====================');
   console.log('start test');
 
   get('/success').then(function(res) {
